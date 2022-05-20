@@ -36,7 +36,7 @@ app.post('/update-profile', function (req, res) {
   res.send(userObj);
 });
 
-app.get('/get-profile', function (req, res) {
+app.get('/get-profile:id', function (req, res) {
   let response = {};
 
   MongoClient.connect(process.env.DB_URL, mongoClientOptions, function (err, client) {
@@ -44,7 +44,7 @@ app.get('/get-profile', function (req, res) {
 
     let db = client.db(databaseName);
 
-    let myquery = { userid: 1 };
+    let myquery = { userid: req.params.id };
 
     db.collection("users").findOne(myquery, function (err, result) {
       if (err) throw err;
