@@ -44,7 +44,7 @@ app.get('/get-profile:id', function (req, res) {
 
     let db = client.db(databaseName);
 
-    let myquery = { userid: req.params.id };
+    let myquery = { userid: 2 };
 
     db.collection("users").findOne(myquery, function (err, result) {
       if (err) throw err;
