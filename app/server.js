@@ -10,20 +10,9 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.use(bodyParser.json());
-
-
-
-// use when starting application locally
-let mongoUrlLocal = "mongodb://admin:password@localhost:27017";
-
-// use when starting application as docker container
-let mongoUrlDocker = "mongodb://admin:password@mongodb";  // Here @mongodb means the mongodb container
-
-// pass these options to mongo client connect request to avoid DeprecationWarning for current Server Discovery and Monitoring engine
 let mongoClientOptions = { useNewUrlParser: true, useUnifiedTopology: true };
-
-// "user-account" in demo with docker. "my-db" in demo with docker-compose
 let databaseName = "my-db";
+
 
 app.post('/update-profile', function (req, res) {
   let userObj = req.body;
@@ -43,13 +32,13 @@ app.post('/update-profile', function (req, res) {
     });
 
   });
-  // Send response
+
   res.send(userObj);
 });
 
 app.get('/get-profile', function (req, res) {
   let response = {};
-  // Connect to the db
+
   MongoClient.connect(process.env.DB_URL, mongoClientOptions, function (err, client) {
     if (err) throw err;
 
@@ -62,7 +51,6 @@ app.get('/get-profile', function (req, res) {
       response = result;
       client.close();
 
-      // Send response
       res.send(response ? response : {});
     });
   });
