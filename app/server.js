@@ -14,16 +14,16 @@ let mongoClientOptions = { useNewUrlParser: true, useUnifiedTopology: true };
 let databaseName = "my-db";
 
 
-app.post('/update-profile', function (req, res) {
+app.post('/add-user', function (req, res) {
   let userObj = req.body;
 
   MongoClient.connect(process.env.DB_URL, mongoClientOptions, function (err, client) {
     if (err) throw err;
 
     let db = client.db(databaseName);
-    userObj['userid'] = req.body.userid;
+    userObj['userName'] = req.body.userName;
 
-    let myquery = { userid: req.body.userid };
+    let myquery = { userName: req.body.userName };
     let newvalues = { $set: userObj };
 
     db.collection("users").updateOne(myquery, newvalues, {upsert: true}, function(err, res) {
@@ -36,7 +36,7 @@ app.post('/update-profile', function (req, res) {
   res.send(userObj);
 });
 
-app.get('/get-profile:id', function (req, res) {
+app.get('/get-user', function (req, res) {
   let response = {};
 
   MongoClient.connect(process.env.DB_URL, mongoClientOptions, function (err, client) {
@@ -44,7 +44,7 @@ app.get('/get-profile:id', function (req, res) {
 
     let db = client.db(databaseName);
 
-    let myquery = { userid: 2 };
+    let myquery = { userName: req.body.userName };
 
     db.collection("users").findOne(myquery, function (err, result) {
       if (err) throw err;
