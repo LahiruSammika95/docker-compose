@@ -21,9 +21,9 @@ app.post('/update-profile', function (req, res) {
     if (err) throw err;
 
     let db = client.db(databaseName);
-    userObj['userid'] = 1;
+    userObj['userid'] = req.body.userid;
 
-    let myquery = { userid: 1 };
+    let myquery = { userid: req.body.userid };
     let newvalues = { $set: userObj };
 
     db.collection("users").updateOne(myquery, newvalues, {upsert: true}, function(err, res) {
