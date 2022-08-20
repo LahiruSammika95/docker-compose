@@ -5,15 +5,15 @@ services:
     ports:
       - 3000:3000 
     environment:
-      - DB_URL=mongodb://admin:password@mongodb  
+      - DB_URL=${DB_URL}
 
   mongodb:
     image: mongo:latest  
     ports:
       - 27017:27017
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=admin
-      - MONGO_INITDB_ROOT_PASSWORD=password
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
     volumes:
       - mongo-data:/data/db
 
